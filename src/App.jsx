@@ -1,20 +1,43 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Autocomplete, Box, Button, Card, CardContent, Container, IconButton, LinearProgress, Stack, TextField, Typography } from '@mui/material'
-import students from './students.json'
+import { Alert, Autocomplete, Box, Button, Card, CardContent, CircularProgress, Container, IconButton, LinearProgress, Stack, TextField, Typography } from '@mui/material'
 
 const SWIPE_THRESHOLD = 80
+const STUDENTS_URL = 'https://tpemartin.github.io/econ115B/data/students.json'
 
 function App() {
+  const [students, setStudents] = useState([])
+  const [loadError, setLoadError] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
   const [dragX, setDragX] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const pointerStart = useRef(null)
-  const currentStudent = students[currentIndex]
+  const currentStudent = students[currentIndex] ?? null
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    async function loadStudents() {
+      try {
+        const response = await fetch(STUDENTS_URL, { cache: 'no-store', signal: controller.signal })
+        if (!response.ok) throw new Error(`HTTP ${response.status}`)
+        const data = await response.json()
+        if (!Array.isArray(data)) throw new Error('Invalid student data')
+        setStudents(data)
+        setLoadError('')
+      } catch (error) {
+        if (error.name !== 'AbortError') setLoadError('目前無法載入導生名單，請稍後重新整理頁面。')
+      }
+    }
+
+    loadStudents()
+    return () => controller.abort()
+  }, [])
 
   const goTo = useCallback((index) => {
+    if (students.length === 0) return
     setCurrentIndex((index + students.length) % students.length)
     setDragX(0)
-  }, [])
+  }, [students.length])
   const goPrevious = useCallback(() => goTo(currentIndex - 1), [currentIndex, goTo])
   const goNext = useCallback(() => goTo(currentIndex + 1), [currentIndex, goTo])
 
@@ -41,7 +64,7 @@ function App() {
       <Container maxWidth="sm" className="app-container">
         <Stack spacing={{ xs: 2.5, sm: 3 }}>
           <Autocomplete
-            fullWidth options={students} value={currentStudent}
+            fullWidth options={students} value={currentStudent} disabled={!currentStudent}
             getOptionLabel={(option) => option.name}
             isOptionEqualToValue={(option, value) => option.name === value.name}
             onChange={(_, value) => value && goTo(students.indexOf(value))}
@@ -50,7 +73,12 @@ function App() {
           />
 
           <Box className="card-stage" aria-live="polite">
-            <Card
+            {!currentStudent && (
+              <Stack alignItems="center" spacing={2}>
+                {loadError ? <Alert severity="error">{loadError}</Alert> : <CircularProgress aria-label="正在載入導生名單" />}
+              </Stack>
+            )}
+            {currentStudent && <Card
               className="student-card" elevation={0}
               onPointerDown={(event) => {
                 pointerStart.current = event.clientX
@@ -72,14 +100,14 @@ function App() {
                   </Typography>
                 </Box>
               </CardContent>
-            </Card>
+            </Card>}
           </Box>
 
-          <LinearProgress variant="determinate" value={((currentIndex + 1) / students.length) * 100} aria-label={`目前為第 ${currentIndex + 1} 位，共 ${students.length} 位`} />
+          <LinearProgress variant="determinate" value={currentStudent ? ((currentIndex + 1) / students.length) * 100 : 0} aria-label={currentStudent ? `目前為第 ${currentIndex + 1} 位，共 ${students.length} 位` : '正在載入導生名單'} />
           <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
-            <IconButton className="nav-button" onClick={goPrevious} aria-label="上一位">←</IconButton>
-            <Button variant="text" onClick={() => goTo(0)}>回到第一位</Button>
-            <IconButton className="nav-button" onClick={goNext} aria-label="下一位">→</IconButton>
+            <IconButton className="nav-button" onClick={goPrevious} disabled={!currentStudent} aria-label="上一位">←</IconButton>
+            <Button variant="text" onClick={() => goTo(0)} disabled={!currentStudent}>回到第一位</Button>
+            <IconButton className="nav-button" onClick={goNext} disabled={!currentStudent} aria-label="下一位">→</IconButton>
           </Stack>
         </Stack>
       </Container>
