@@ -1,72 +1,282 @@
 [
-  { "name": "(002)吳咏庭", "introduction": "" },
-  { "name": "(004)賴慈芸", "introduction": "" },
-  { "name": "(006)黃詩淇", "introduction": "" },
-  { "name": "(008)陳易平", "introduction": "" },
-  { "name": "(010)何庭貽", "introduction": "" },
-  { "name": "(012)洪語緁", "introduction": "" },
-  { "name": "(014)葉曜誠", "introduction": "" },
-  { "name": "(016)羅淮立", "introduction": "" },
-  { "name": "(018)林芸安", "introduction": "" },
-  { "name": "(020)吳若溱", "introduction": "" },
-  { "name": "(022)彭硯", "introduction": "" },
-  { "name": "(024)蔡映伶", "introduction": "" },
-  { "name": "(026)古晟安", "introduction": "" },
-  { "name": "(028)張巧旻", "introduction": "" },
-  { "name": "(030)徐睿辰", "introduction": "" },
-  { "name": "(032)林芷儀", "introduction": "" },
-  { "name": "(034)陳粲閎", "introduction": "" },
-  { "name": "(036)李明遠", "introduction": "" },
-  { "name": "(038)張皓博", "introduction": "" },
-  { "name": "(040)陳駿安", "introduction": "" },
-  { "name": "(042)吳嘉禹", "introduction": "" },
-  { "name": "(044)陳廷睿", "introduction": "" },
-  { "name": "(046)林家瑢", "introduction": "" },
-  { "name": "(048)張芷嫣", "introduction": "" },
-  { "name": "(050)陳翊菲", "introduction": "" },
-  { "name": "(052)吳雋", "introduction": "" },
-  { "name": "(054)楊品琦", "introduction": "" },
-  { "name": "(056)陳禹杉", "introduction": "" },
-  { "name": "(058)曾筱琪", "introduction": "" },
-  { "name": "(060)翁質恩", "introduction": "" },
-  { "name": "(062)吳宥陞", "introduction": "" },
-  { "name": "(064)王鈺淇", "introduction": "" },
-  { "name": "(066)梁博翔", "introduction": "" },
-  { "name": "(068)林佑承", "introduction": "" },
-  { "name": "(070)辜敬淳", "introduction": "" },
-  { "name": "(072)楊喆安", "introduction": "" },
-  { "name": "(074)呂紹碩", "introduction": "" },
-  { "name": "(076)高榛妘", "introduction": "" },
-  { "name": "(078)許詩苡", "introduction": "" },
-  { "name": "(080)陳柏宇", "introduction": "" },
-  { "name": "(082)姚賀評", "introduction": "" },
-  { "name": "(084)施孟傑", "introduction": "" },
-  { "name": "(086)陳彥宗", "introduction": "" },
-  { "name": "(088)張宸瑋", "introduction": "" },
-  { "name": "(090)徐定君", "introduction": "" },
-  { "name": "(092)蕭宥睿", "introduction": "" },
-  { "name": "(094)吳宜柔", "introduction": "" },
-  { "name": "(096)葉宇哲", "introduction": "" },
-  { "name": "(098)陳明宜", "introduction": "" },
-  { "name": "(100)林宥峻", "introduction": "" },
-  { "name": "(102)滕子涵", "introduction": "" },
-  { "name": "(104)高奕謙", "introduction": "" },
-  { "name": "(106)林軒甄", "introduction": "" },
-  { "name": "(108)熊咸傑", "introduction": "" },
-  { "name": "(110)羅以晴", "introduction": "" },
-  { "name": "(112)陳宜盈", "introduction": "" },
-  { "name": "(114)楊俊偉", "introduction": "" },
-  { "name": "(116)廖泓誠", "introduction": "" },
-  { "name": "(118)張橙芸", "introduction": "" },
-  { "name": "(120)劉家蓁", "introduction": "" },
-  { "name": "(122)張晏蓉", "introduction": "" },
-  { "name": "(124)陳皓莛", "introduction": "" },
-  { "name": "(126)李錦潁", "introduction": "" },
-  { "name": "(128)程秀桃", "introduction": "" },
-  { "name": "(130)葉信沂", "introduction": "" },
-  { "name": "(132)楊運鳳", "introduction": "" },
-  { "name": "(134)楊莉京", "introduction": "" },
-  { "name": "(136)金曉月", "introduction": "" },
-  { "name": "(138)尹海正", "introduction": "" },
-  { "name": "(140)李金金", "introduction": "" }
+  {
+    "name": "(002)吳咏庭",
+    "introduction": ""
+  },
+  {
+    "name": "(004)賴慈芸",
+    "introduction": ""
+  },
+  {
+    "name": "(006)黃詩淇",
+    "introduction": ""
+  },
+  {
+    "name": "(008)陳易平",
+    "introduction": "大家好，我是陳易平。來自新北市的新店，畢業於臺北市的西松高中，全台灣最小的公立高中就是我們學校。很高興能在這裡與大家認識，希望未來能和各位一起學習、一起成長，也請大家多多指教，謝謝大家！"
+  },
+  {
+    "name": "(010)何庭貽",
+    "introduction": ""
+  },
+  {
+    "name": "(012)洪語緁",
+    "introduction": ""
+  },
+  {
+    "name": "(014)葉曜誠",
+    "introduction": ""
+  },
+  {
+    "name": "(016)羅淮立",
+    "introduction": ""
+  },
+  {
+    "name": "(018)林芸安",
+    "introduction": ""
+  },
+  {
+    "name": "(020)吳若溱",
+    "introduction": ""
+  },
+  {
+    "name": "(022)彭硯",
+    "introduction": ""
+  },
+  {
+    "name": "(024)蔡映伶",
+    "introduction": "我來自臺中市，個性一半內向一半外向，有點慢熟，平常的興趣是追韓國明星跟看棒球，希望在大學期間能多多認識大家。"
+  },
+  {
+    "name": "(026)古晟安",
+    "introduction": ""
+  },
+  {
+    "name": "(028)張巧旻",
+    "introduction": ""
+  },
+  {
+    "name": "(030)徐睿辰",
+    "introduction": ""
+  },
+  {
+    "name": "(032)林芷儀",
+    "introduction": ""
+  },
+  {
+    "name": "(034)陳粲閎",
+    "introduction": "我叫陳粲閎 平常的興趣是打排球和畫畫 期待可以和老師們跟同學們變熟"
+  },
+  {
+    "name": "(036)李明遠",
+    "introduction": ""
+  },
+  {
+    "name": "(038)張皓博",
+    "introduction": ""
+  },
+  {
+    "name": "(040)陳駿安",
+    "introduction": "180/61/19 \n歲 台北人 英文名字是Ivan \n興趣是看電影、動漫、散步、唱歌 \n喜歡的歌手有盧廣仲 周興哲 林宥嘉 最近常聽宇宙人 \n比較內向慢熟 但喜歡交朋友 \n夢想是退休去日本生活 \n還有下下禮拜搶到Bruno Mars的票\n很高興認識大家"
+  },
+  {
+    "name": "(042)吳嘉禹",
+    "introduction": ""
+  },
+  {
+    "name": "(044)陳廷睿",
+    "introduction": ""
+  },
+  {
+    "name": "(046)林家瑢",
+    "introduction": ""
+  },
+  {
+    "name": "(048)張芷嫣",
+    "introduction": ""
+  },
+  {
+    "name": "(050)陳翊菲",
+    "introduction": ""
+  },
+  {
+    "name": "(052)吳雋",
+    "introduction": ""
+  },
+  {
+    "name": "(054)楊品琦",
+    "introduction": ""
+  },
+  {
+    "name": "(056)陳禹杉",
+    "introduction": ""
+  },
+  {
+    "name": "(058)曾筱琪",
+    "introduction": ""
+  },
+  {
+    "name": "(060)翁質恩",
+    "introduction": ""
+  },
+  {
+    "name": "(062)吳宥陞",
+    "introduction": ""
+  },
+  {
+    "name": "(064)王鈺淇",
+    "introduction": ""
+  },
+  {
+    "name": "(066)梁博翔",
+    "introduction": ""
+  },
+  {
+    "name": "(068)林佑承",
+    "introduction": ""
+  },
+  {
+    "name": "(070)辜敬淳",
+    "introduction": ""
+  },
+  {
+    "name": "(072)楊喆安",
+    "introduction": ""
+  },
+  {
+    "name": "(074)呂紹碩",
+    "introduction": ""
+  },
+  {
+    "name": "(076)高榛妘",
+    "introduction": ""
+  },
+  {
+    "name": "(078)許詩苡",
+    "introduction": ""
+  },
+  {
+    "name": "(080)陳柏宇",
+    "introduction": ""
+  },
+  {
+    "name": "(082)姚賀評",
+    "introduction": ""
+  },
+  {
+    "name": "(084)施孟傑",
+    "introduction": ""
+  },
+  {
+    "name": "(086)陳彥宗",
+    "introduction": ""
+  },
+  {
+    "name": "(088)張宸瑋",
+    "introduction": "大家好我是張宸瑋，來自台中市立台中二中，平常的興趣是打羽球跟閱讀輕小說，偶爾也喜歡追劇，很高興也很幸運能加入北大經濟B班這個大家庭，希望能跟老師與同學們和睦相處，認真求學。"
+  },
+  {
+    "name": "(090)徐定君",
+    "introduction": ""
+  },
+  {
+    "name": "(092)蕭宥睿",
+    "introduction": "\n我是蕭宥睿，來自台中惠文高中。平常我喜歡閱讀、打打遊戲，也一些文學、創作很有興趣，接下來的四年請大家多多指教"
+  },
+  {
+    "name": "(094)吳宜柔",
+    "introduction": ""
+  },
+  {
+    "name": "(096)葉宇哲",
+    "introduction": ""
+  },
+  {
+    "name": "(098)陳明宜",
+    "introduction": ""
+  },
+  {
+    "name": "(100)林宥峻",
+    "introduction": ""
+  },
+  {
+    "name": "(102)滕子涵",
+    "introduction": ""
+  },
+  {
+    "name": "(104)高奕謙",
+    "introduction": ""
+  },
+  {
+    "name": "(106)林軒甄",
+    "introduction": ""
+  },
+  {
+    "name": "(108)熊咸傑",
+    "introduction": ""
+  },
+  {
+    "name": "(110)羅以晴",
+    "introduction": ""
+  },
+  {
+    "name": "(112)陳宜盈",
+    "introduction": ""
+  },
+  {
+    "name": "(114)楊俊偉",
+    "introduction": ""
+  },
+  {
+    "name": "(116)廖泓誠",
+    "introduction": ""
+  },
+  {
+    "name": "(118)張橙芸",
+    "introduction": ""
+  },
+  {
+    "name": "(120)劉家蓁",
+    "introduction": ""
+  },
+  {
+    "name": "(122)張晏蓉",
+    "introduction": ""
+  },
+  {
+    "name": "(124)陳皓莛",
+    "introduction": "您好，我是陳皓莛，高雄人🥵，興趣是網球🎾、戰錘40000🫡、F1🏎️、歷史、Minecraft🔥、Terraria🔥。歡迎同學們和我交流戰錘40000（臺灣玩這個的人好少）"
+  },
+  {
+    "name": "(126)李錦潁",
+    "introduction": ""
+  },
+  {
+    "name": "(128)程秀桃",
+    "introduction": ""
+  },
+  {
+    "name": "(130)葉信沂",
+    "introduction": ""
+  },
+  {
+    "name": "(132)楊運鳳",
+    "introduction": "老師同學們大家好，我的名字叫楊運鳳，很高興來到國立台北大學和大家一起學習交流。我的性格比較慢熱內向不太愛說話。之後在學習上有什麼不懂的地方，還希望老師和同學們多多指導，也期待和大家慢慢熟悉起來"
+  },
+  {
+    "name": "(134)楊莉京",
+    "introduction": ""
+  },
+  {
+    "name": "(136)金曉月",
+    "introduction": ""
+  },
+  {
+    "name": "(138)尹海正",
+    "introduction": ""
+  },
+  {
+    "name": "(140)李金金",
+    "introduction": ""
+  }
 ]
