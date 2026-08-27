@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Alert, Autocomplete, Box, Button, Card, CardContent, CircularProgress, Container, IconButton, LinearProgress, Stack, TextField, Typography } from '@mui/material'
 
 const SWIPE_THRESHOLD = 80
-const STUDENTS_URL = 'https://tpemartin.github.io/econ115B/data/students.json'
+const STUDENTS_URL = 'https://raw.githubusercontent.com/tpemartin/econ115B/refs/heads/main/public/data/students.json'
 
 function App() {
   const [students, setStudents] = useState([])
