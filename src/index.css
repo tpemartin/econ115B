@@ -8,10 +8,28 @@ body { margin: 0; min-width: 320px; min-height: 100vh; }
 .student-card { width: 100%; height: 100%; cursor: grab; touch-action: pan-y; user-select: none; border: 1px solid rgba(31, 78, 121, .12); border-radius: 28px !important; background: rgba(255, 255, 255, .94) !important; box-shadow: 0 24px 70px rgba(31, 61, 89, .14) !important; }
 .student-card:active { cursor: grabbing; }
 .card-content { display: flex; height: 100%; min-height: 0; flex-direction: column; align-items: center; justify-content: center; gap: 1.25rem; padding: 2rem !important; text-align: center; overflow: hidden; }
-.avatar { display: grid; width: 88px; height: 88px; place-items: center; border-radius: 50%; color: white; background: linear-gradient(145deg, #1f4e79, #377bad); box-shadow: 0 12px 28px rgba(31, 78, 121, .25); font-size: 2.2rem; font-weight: 800; }
-.introduction-scroll { width: 100%; min-height: 0; max-height: 45%; overflow-y: auto; overscroll-behavior: contain; padding: .5rem .75rem; border-radius: 12px; scrollbar-gutter: stable; }
+.card-content h2 { font-size: 1.5rem; line-height: 1.2; }
+.avatar { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 50%; color: white; background: linear-gradient(145deg, #1f4e79, #377bad); box-shadow: 0 12px 28px rgba(31, 78, 121, .25); font-size: 16px; font-weight: 800; line-height: 1; }
+.introduction-scroll { width: 100%; height: 80%; min-height: 0; max-height: none; flex-grow: 0; flex-shrink: 0; overflow-y: auto; overscroll-behavior: contain; padding: .5rem .75rem; border-radius: 12px; scrollbar-gutter: stable; }
 .introduction-scroll:focus-visible { outline: 2px solid #1f4e79; outline-offset: 2px; }
 .introduction-text { display: flex; min-height: 100%; align-items: center; justify-content: center; line-height: 1.8 !important; white-space: pre-wrap; }
+.css-fyswvn { height: 100%; min-height: 100%; }
 .nav-button { width: 52px; height: 52px; border: 1px solid rgba(31, 78, 121, .18) !important; background: white !important; box-shadow: 0 8px 20px rgba(31, 61, 89, .1); }
 .MuiStack-root.css-jj2ztu { display: flex; justify-content: center; align-items: center; }
-@media (max-width: 480px) { .card-stage { height: clamp(380px, 56dvh, 600px); padding-inline: 0; } .card-content { padding: 1.5rem !important; } .card-content h2 { font-size: 2.35rem; } }
+
+.card-stage.MuiBox-root.css-0 {
+  flex-grow: 1;
+  height: auto;
+}
+
+.MuiStack-root.css-ppuk6i {
+  flex-grow: 1;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+@media (max-width: 480px) { .card-stage { height: clamp(380px, 56dvh, 600px); padding-inline: 0; } .card-content { padding: 1.5rem !important; } }
