@@ -3,6 +3,7 @@ import { Alert, Autocomplete, Box, Button, Card, CardContent, CircularProgress, 
 
 const SWIPE_THRESHOLD = 80
 const STUDENTS_URL = 'https://raw.githubusercontent.com/tpemartin/econ115B/refs/heads/main/public/data/students.json'
+const hasIntroduction = (student) => Boolean(student?.introduction?.trim())
 
 function App() {
   const [students, setStudents] = useState([])
@@ -23,6 +24,8 @@ function App() {
         const data = await response.json()
         if (!Array.isArray(data)) throw new Error('Invalid student data')
         setStudents(data)
+        const firstIntroducedIndex = data.findIndex(hasIntroduction)
+        setCurrentIndex(firstIntroducedIndex >= 0 ? firstIntroducedIndex : 0)
         setLoadError('')
       } catch (error) {
         if (error.name !== 'AbortError') setLoadError('目前無法載入導生名單，請稍後重新整理頁面。')
@@ -38,8 +41,21 @@ function App() {
     setCurrentIndex((index + students.length) % students.length)
     setDragX(0)
   }, [students.length])
-  const goPrevious = useCallback(() => goTo(currentIndex - 1), [currentIndex, goTo])
-  const goNext = useCallback(() => goTo(currentIndex + 1), [currentIndex, goTo])
+
+  const goToIntroducedStudent = useCallback((direction) => {
+    for (let offset = 1; offset <= students.length; offset += 1) {
+      const candidateIndex = (currentIndex + direction * offset + students.length) % students.length
+      if (hasIntroduction(students[candidateIndex])) {
+        goTo(candidateIndex)
+        return
+      }
+    }
+  }, [currentIndex, goTo, students])
+
+  const goPrevious = useCallback(() => goToIntroducedStudent(-1), [goToIntroducedStudent])
+  const goNext = useCallback(() => goToIntroducedStudent(1), [goToIntroducedStudent])
+  const firstIntroducedIndex = students.findIndex(hasIntroduction)
+  const hasIntroducedStudents = firstIntroducedIndex >= 0
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -66,6 +82,7 @@ function App() {
           <Autocomplete
             fullWidth options={students} value={currentStudent} disabled={!currentStudent}
             getOptionLabel={(option) => option.name}
+            getOptionDisabled={(option) => !hasIntroduction(option)}
             isOptionEqualToValue={(option, value) => option.name === value.name}
             onChange={(_, value) => value && goTo(students.indexOf(value))}
             renderInput={(params) => <TextField {...params} label="快速搜尋" placeholder="輸入座號或姓名" />}
@@ -105,9 +122,9 @@ function App() {
 
           <LinearProgress variant="determinate" value={currentStudent ? ((currentIndex + 1) / students.length) * 100 : 0} aria-label={currentStudent ? `目前為第 ${currentIndex + 1} 位，共 ${students.length} 位` : '正在載入導生名單'} />
           <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
-            <IconButton className="nav-button" onClick={goPrevious} disabled={!currentStudent} aria-label="上一位">←</IconButton>
-            <Button variant="text" onClick={() => goTo(0)} disabled={!currentStudent}>回到第一位</Button>
-            <IconButton className="nav-button" onClick={goNext} disabled={!currentStudent} aria-label="下一位">→</IconButton>
+            <IconButton className="nav-button" onClick={goPrevious} disabled={!hasIntroducedStudents} aria-label="上一位有自我介紹的同學">←</IconButton>
+            <Button variant="text" onClick={() => goTo(firstIntroducedIndex)} disabled={!hasIntroducedStudents}>回到第一位</Button>
+            <IconButton className="nav-button" onClick={goNext} disabled={!hasIntroducedStudents} aria-label="下一位有自我介紹的同學">→</IconButton>
           </Stack>
         </Stack>
       </Container>

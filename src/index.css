@@ -15,6 +15,7 @@ body { margin: 0; min-width: 320px; min-height: 100vh; }
 .introduction-text { display: flex; min-height: 100%; align-items: center; justify-content: center; line-height: 1.8 !important; white-space: pre-wrap; }
 .css-fyswvn { height: 100%; min-height: 100%; }
 .nav-button { width: 52px; height: 52px; border: 1px solid rgba(31, 78, 121, .18) !important; background: white !important; box-shadow: 0 8px 20px rgba(31, 61, 89, .1); }
+.MuiAutocomplete-option[aria-disabled="true"] { color: rgba(23, 33, 43, .38) !important; opacity: 1; }
 .MuiStack-root.css-jj2ztu { display: flex; justify-content: center; align-items: center; }
 
 .card-stage.MuiBox-root.css-0 {
