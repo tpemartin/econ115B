@@ -4,6 +4,12 @@ import { Alert, Autocomplete, Box, Button, Card, CardContent, CircularProgress, 
 const SWIPE_THRESHOLD = 80
 const STUDENTS_URL = 'https://raw.githubusercontent.com/tpemartin/econ115B/refs/heads/main/public/data/students.json'
 const hasIntroduction = (student) => Boolean(student?.introduction?.trim())
+const getCardId = (index) => `card_${String(index + 1).padStart(3, '0')}`
+
+const pushAnalyticsEvent = (event) => {
+  window.dataLayer = window.dataLayer || []
+  window.dataLayer.push(event)
+}
 
 function App() {
   const [students, setStudents] = useState([])
@@ -12,6 +18,7 @@ function App() {
   const [dragX, setDragX] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const pointerStart = useRef(null)
+  const navigationMethod = useRef('initial_load')
   const currentStudent = students[currentIndex] ?? null
 
   useEffect(() => {
@@ -36,40 +43,88 @@ function App() {
     return () => controller.abort()
   }, [])
 
-  const goTo = useCallback((index) => {
+  const goTo = useCallback((index, method = 'direct') => {
     if (students.length === 0) return
+    navigationMethod.current = method
     setCurrentIndex((index + students.length) % students.length)
     setDragX(0)
   }, [students.length])
 
-  const goToIntroducedStudent = useCallback((direction) => {
+  const goToIntroducedStudent = useCallback((direction, method) => {
     for (let offset = 1; offset <= students.length; offset += 1) {
       const candidateIndex = (currentIndex + direction * offset + students.length) % students.length
       if (hasIntroduction(students[candidateIndex])) {
-        goTo(candidateIndex)
+        goTo(candidateIndex, method)
         return
       }
     }
   }, [currentIndex, goTo, students])
 
-  const goPrevious = useCallback(() => goToIntroducedStudent(-1), [goToIntroducedStudent])
-  const goNext = useCallback(() => goToIntroducedStudent(1), [goToIntroducedStudent])
+  const goPrevious = useCallback((method = 'previous_button') => goToIntroducedStudent(-1, method), [goToIntroducedStudent])
+  const goNext = useCallback((method = 'next_button') => goToIntroducedStudent(1, method), [goToIntroducedStudent])
   const firstIntroducedIndex = students.findIndex(hasIntroduction)
   const hasIntroducedStudents = firstIntroducedIndex >= 0
 
   useEffect(() => {
+    if (!currentStudent || !hasIntroduction(currentStudent)) return undefined
+
+    const cardId = getCardId(currentIndex)
+    let visibleSince = document.visibilityState === 'visible' ? performance.now() : null
+    let visibleDuration = 0
+    let sent = false
+
+    pushAnalyticsEvent({
+      event: 'student_card_view',
+      card_id: cardId,
+      navigation_method: navigationMethod.current,
+    })
+
+    const accumulateVisibleTime = () => {
+      if (visibleSince !== null) {
+        visibleDuration += performance.now() - visibleSince
+        visibleSince = null
+      }
+    }
+
+    const sendDuration = () => {
+      if (sent) return
+      accumulateVisibleTime()
+      sent = true
+      pushAnalyticsEvent({
+        event: 'student_card_view_end',
+        card_id: cardId,
+        view_duration_ms: Math.round(visibleDuration),
+      })
+    }
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') accumulateVisibleTime()
+      else if (!sent && visibleSince === null) visibleSince = performance.now()
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('pagehide', sendDuration)
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('pagehide', sendDuration)
+      sendDuration()
+    }
+  }, [currentIndex, currentStudent])
+
+  useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.target instanceof HTMLInputElement) return
-      if (event.key === 'ArrowLeft') goPrevious()
-      if (event.key === 'ArrowRight') goNext()
+      if (event.key === 'ArrowLeft') goPrevious('keyboard')
+      if (event.key === 'ArrowRight') goNext('keyboard')
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [goNext, goPrevious])
 
   const finishSwipe = () => {
-    if (dragX <= -SWIPE_THRESHOLD) goNext()
-    else if (dragX >= SWIPE_THRESHOLD) goPrevious()
+    if (dragX <= -SWIPE_THRESHOLD) goNext('swipe')
+    else if (dragX >= SWIPE_THRESHOLD) goPrevious('swipe')
     else setDragX(0)
     pointerStart.current = null
     setIsDragging(false)
@@ -84,7 +139,7 @@ function App() {
             getOptionLabel={(option) => option.name}
             getOptionDisabled={(option) => !hasIntroduction(option)}
             isOptionEqualToValue={(option, value) => option.name === value.name}
-            onChange={(_, value) => value && goTo(students.indexOf(value))}
+            onChange={(_, value) => value && goTo(students.indexOf(value), 'search')}
             renderInput={(params) => <TextField {...params} label="快速搜尋" placeholder="輸入座號或姓名" />}
             noOptionsText="找不到符合的同學"
           />
@@ -122,9 +177,9 @@ function App() {
 
           <LinearProgress variant="determinate" value={currentStudent ? ((currentIndex + 1) / students.length) * 100 : 0} aria-label={currentStudent ? `目前為第 ${currentIndex + 1} 位，共 ${students.length} 位` : '正在載入導生名單'} />
           <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
-            <IconButton className="nav-button" onClick={goPrevious} disabled={!hasIntroducedStudents} aria-label="上一位有自我介紹的同學">←</IconButton>
-            <Button variant="text" onClick={() => goTo(firstIntroducedIndex)} disabled={!hasIntroducedStudents}>回到第一位</Button>
-            <IconButton className="nav-button" onClick={goNext} disabled={!hasIntroducedStudents} aria-label="下一位有自我介紹的同學">→</IconButton>
+            <IconButton className="nav-button" onClick={() => goPrevious('previous_button')} disabled={!hasIntroducedStudents} aria-label="上一位有自我介紹的同學">←</IconButton>
+            <Button variant="text" onClick={() => goTo(firstIntroducedIndex, 'first_button')} disabled={!hasIntroducedStudents}>回到第一位</Button>
+            <IconButton className="nav-button" onClick={() => goNext('next_button')} disabled={!hasIntroducedStudents} aria-label="下一位有自我介紹的同學">→</IconButton>
           </Stack>
         </Stack>
       </Container>
